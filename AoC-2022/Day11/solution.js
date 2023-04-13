@@ -10,26 +10,32 @@ fs = require("fs")
 //   - Update number of inspected items by monkey
 // Before playing: loop through notes and create monkey objects
 
+const NUMBER_OF_ROUNDS = 10000
+const WORRY_LEVEL_MANAGEMENT_NUMBER = BigInt(1)
+
 function computeNewWorryLevel(oldWorryLevel, operation) {
   const op = operation.operator
   const fstTerm =
-    operation.fstTerm === "old" ? oldWorryLevel : parseInt(operation.fstTerm)
+    operation.fstTerm === "old"
+      ? oldWorryLevel
+      : BigInt(parseInt(operation.fstTerm))
   const sndTerm =
-    operation.sndTerm === "old" ? oldWorryLevel : parseInt(operation.sndTerm)
-  let newWorryLevel = -1
+    operation.sndTerm === "old"
+      ? oldWorryLevel
+      : BigInt(parseInt(operation.sndTerm))
+  let newWorryLevel = null
   if (op === "+") newWorryLevel = fstTerm + sndTerm
-  if (op === "-") newWorryLevel = fstTerm - sndTerm
-  if (op === "/") newWorryLevel = fstTerm / sndTerm
   if (op === "*") newWorryLevel = fstTerm * sndTerm
-  return Math.floor(newWorryLevel / 3)
+  return WORRY_LEVEL_MANAGEMENT_NUMBER === 1n
+    ? newWorryLevel
+    : newWorryLevel / WORRY_LEVEL_MANAGEMENT_NUMBER
 }
-
-const NUMBER_OF_ROUNDS = 20
 
 // State
 let monkeys = {}
 
-fs.readFile("./input.txt", (e, data) => {
+fs.readFile("./small_input.txt", (e, data) => {
+  // Parse Input
   const notes = data
     .toString()
     .split(/\n\n/)
@@ -40,7 +46,7 @@ fs.readFile("./input.txt", (e, data) => {
     const itemsWorryLevels = note[1]
       .split(":")[1]
       .split(",")
-      .map((wl) => parseInt(wl))
+      .map((wl) => BigInt(parseInt(wl)))
     const newWorryLevelOperation = note[2]
       .split(":")[1]
       .split("=")[1]
@@ -64,7 +70,7 @@ fs.readFile("./input.txt", (e, data) => {
       sndTerm,
     }
     monkey.test = {
-      divideBy: divisionTest,
+      divideBy: BigInt(divisionTest),
       pass: testPassedDecision,
       fail: testFailedDecision,
     }
@@ -73,7 +79,7 @@ fs.readFile("./input.txt", (e, data) => {
     monkeys[monkeyNumber] = monkey
   })
 
-  // Play Monkey in the Middle for 20 rounds
+  // Play Monkey in the Middle for X rounds
   for (let i = 0; i < NUMBER_OF_ROUNDS; i++) {
     /** Play monkey turn:
      * Loop through items:
@@ -89,13 +95,16 @@ fs.readFile("./input.txt", (e, data) => {
         const newWorryLevel = computeNewWorryLevel(wl, monkey.operation)
         // SIDE EFFECTS!!!
         monkey.inspectedItems++
-        if (newWorryLevel % monkey.test.divideBy === 0) {
+        if (newWorryLevel % monkey.test.divideBy === BigInt(0)) {
           monkeys[monkey.test.pass].itemsWorryLevels.push(newWorryLevel)
         } else monkeys[monkey.test.fail].itemsWorryLevels.push(newWorryLevel)
       })
       monkey.itemsWorryLevels = []
     }
   }
+
+  // console.log(monkeys)
+  // Compute Monkey Business
   let numberOfInspections = []
   for (const monkeyNumber in monkeys) {
     const monkey = monkeys[monkeyNumber]
@@ -105,5 +114,5 @@ fs.readFile("./input.txt", (e, data) => {
     .sort((a, b) => b - a)
     .slice(0, 2)
   const monkeyBusiness = twoMostActiveMonkeys[0] * twoMostActiveMonkeys[1]
-  console.log(monkeyBusiness)
+  console.log(numberOfInspections)
 })
