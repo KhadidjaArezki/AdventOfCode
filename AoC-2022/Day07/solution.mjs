@@ -34,7 +34,7 @@ function addChildren(tree, contents) {
   })
 }
 
-/********************** Work Territory ********************
+/********************** Work Territory ******************************************
  Parsing terminal output:
  Output structure: cd+ ls <contents>. If <contents> contain dirs, cd into first
    - detect command lines by looking for a '$'
@@ -44,7 +44,7 @@ function addChildren(tree, contents) {
    - output that starts with 'dir' => add child tree object to parent's children
    - output that starts with a number => add file object to parent's children
   
-**********************************************************/
+*********************************************************************************/
 
 fs.readFile("./input.txt", (e, data) => {
   const MAX_SIZE = 100000
@@ -76,7 +76,7 @@ fs.readFile("./input.txt", (e, data) => {
     })
   })
 
-  // Part 01
+  /** Part 01 ***/
   // let targets = []
   // root.traverse((tree) => {
   //   if (tree.type === "FNode" && tree.getSize() <= MAX_SIZE) {
@@ -87,7 +87,7 @@ fs.readFile("./input.txt", (e, data) => {
   // let targetSizes = targets.map((t) => t.getSize())
   // console.log(sum(targetSizes))
 
-  // Part 02
+  /** Part 02 ***/
   const USED_SPACE = root.getSize()
   const FREE_SPACE = FILE_SYSTEM_SIZE - USED_SPACE
   const MIN_SPACE_TO_FREE = REQUIRED_SPACE - FREE_SPACE

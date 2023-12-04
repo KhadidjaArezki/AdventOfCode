@@ -10,8 +10,8 @@ fs = require("fs")
 //   - Update number of inspected items by monkey
 // Before playing: loop through notes and create monkey objects
 
-const NUMBER_OF_ROUNDS = 10000
-const WORRY_LEVEL_MANAGEMENT_NUMBER = BigInt(1)
+const NUMBER_OF_ROUNDS = 20
+const WORRY_LEVEL_MANAGEMENT_NUMBER = BigInt(3)
 
 function computeNewWorryLevel(oldWorryLevel, operation) {
   const op = operation.operator
@@ -34,7 +34,7 @@ function computeNewWorryLevel(oldWorryLevel, operation) {
 // State
 let monkeys = {}
 
-fs.readFile("./small_input.txt", (e, data) => {
+fs.readFile("./input.txt", (e, data) => {
   // Parse Input
   const notes = data
     .toString()
@@ -114,5 +114,5 @@ fs.readFile("./small_input.txt", (e, data) => {
     .sort((a, b) => b - a)
     .slice(0, 2)
   const monkeyBusiness = twoMostActiveMonkeys[0] * twoMostActiveMonkeys[1]
-  console.log(numberOfInspections)
+  console.log(monkeyBusiness)
 })
