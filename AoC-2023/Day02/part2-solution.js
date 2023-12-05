@@ -1,22 +1,4 @@
-
 fs = require("fs")
-
-/**
- * Loop over games
- * for each game:
- *   get game id
- *   for each game round:
- *     get number of red cubes
- *     get number of green cubes
- *     get number of blue cubes
- *     if number of <color> cubes > <color> target: dismiss game
- *     else add game id to possible games array
- * return sum of possible games array
- */
-
-const RED_CUBES_TARGET = 12
-const GREEN_CUBES_TARGET = 13
-const BLUE_CUBES_TARGET = 14
 
 fs.readFile("./input.txt", (e, data) => {
   const possibleGames = data.toString().split(/\n/)
