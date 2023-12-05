@@ -25,21 +25,16 @@ fs.readFile("./input.txt", (e, data) => {
     .map(arr => arr.map(s => s.trimStart().split(/\s/)))
     const game = {
       id: parseInt(line.match(/^Game\s(\d+):\s/)[1]),
-      rounds: roundMatches.map((r, i) => {
+      rounds: roundMatches.map((r, i) => r.map(sr => {
         return {
-          rId: i,
-          subRounds: r.map(sr => {
-            return {
-              cubes: parseInt(sr[0]),
-              color: sr[1]
-            }
-          })
+          cubes: parseInt(sr[0]),
+          color: sr[1]
         }
-      })
+      }))
     }
     let isPossibleGame = true
     game.rounds.forEach(r => {
-      if (!r.subRounds.every(sr => {
+      if (!r.every(sr => {
         if (sr.color == "red") return sr.cubes <= RED_CUBES_TARGET
         else if (sr.color == "green") return sr.cubes <= GREEN_CUBES_TARGET
         else return sr.cubes <= BLUE_CUBES_TARGET
