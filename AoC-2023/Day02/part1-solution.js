@@ -5,8 +5,8 @@ const GREEN_CUBES_TARGET = 13
 const BLUE_CUBES_TARGET = 14
 
 fs.readFile("./input.txt", (e, data) => {
-  const possibleGames = data.toString().split(/\n/)
-  .reduce((possibleGames, line) => {
+  const possibleGamesIdsSum = data.toString().split(/\n/)
+  .reduce((acc, line) => {
     const roundMatches = line.substring(line.indexOf(":")+1, line.length).split(";")
     .map(r => r.match(/\s(\d+\s[a-z]+)/g))
     .map(arr => arr.map(s => s.trimStart().split(/\s/)))
@@ -29,8 +29,8 @@ fs.readFile("./input.txt", (e, data) => {
         isPossibleGame = false
       } 
     })
-    if (isPossibleGame) possibleGames.push(game)
-    return possibleGames
-  }, [])
-  console.log(possibleGames.reduce((sum, game) => sum + game.id, 0))
+    if (isPossibleGame) return acc + game.id
+    else return acc
+  }, 0)
+  console.log(possibleGamesIdsSum)
 })

@@ -14,7 +14,7 @@ const digitsRegex = RegExp(`(\\d|${Object.keys(digits).join("|")})`, "g")
 
 fs.readFile("./input.txt", (e, data) => {
   let lines = data.toString().split(/\n/)
-  const calibrationValues = lines.reduce((calibrationValues, line) => {
+  const calibrationValSum = lines.reduce((calibrationValues, line) => {
     const lineDigits = [...line.matchAll(digitsRegex)]
       .map(arr => arr[0])
       .map(digit => {
@@ -22,8 +22,7 @@ fs.readFile("./input.txt", (e, data) => {
         else return digit
       })
     const currCalibVal = `${lineDigits[0]}${lineDigits[lineDigits.length - 1]}`
-    calibrationValues.push(parseInt(currCalibVal))
-    return calibrationValues
-  }, [])
-  console.log(calibrationValues.reduce((sum, val) => sum + val, 0))
+    return calibrationValues + parseInt(currCalibVal)
+  }, 0)
+  console.log(calibrationValSum)
 })
