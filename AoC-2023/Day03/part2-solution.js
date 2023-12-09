@@ -1,6 +1,6 @@
 fs = require("fs")
 
-function getNumsDigIndices(numsRow) {
+function getNumsDigitIndices(numsRow) {
   return numsRow.map(({ index, number, length }) => {
     let numDigitIndices = []
     for (let j = 0; j < length; j++) {
@@ -50,12 +50,12 @@ fs.readFile("./input.txt", (e, data) => {
     }))
   })
 
-  const gearRatioSum = asterisks.reduce((acc, asteriskArr, i) => {
-    let rowGearRatioSum = asteriskArr.reduce((rowAcc, asteriskIndex) => {
+  const gearRatioSum = asterisks.reduce((acc, rowAsterisks, i) => {
+    let rowGearRatioSum = rowAsterisks.reduce((rowAcc, asteriskIndex) => {
       let touchingPartNums = []
-      const currRowNums = getNumsDigIndices(numbers[i])
-      const upperRowNums = getNumsDigIndices(numbers[i-1] || [])
-      const lowerRowNums = getNumsDigIndices(numbers[i+1] || [])
+      const currRowNums = getNumsDigitIndices(numbers[i])
+      const upperRowNums = getNumsDigitIndices(numbers[i-1] || [])
+      const lowerRowNums = getNumsDigitIndices(numbers[i+1] || [])
       touchingPartNums.push(...getAllTouchingNums([asteriskIndex-1, asteriskIndex+1], currRowNums))
       touchingPartNums.push(...getAllTouchingNums([asteriskIndex, asteriskIndex-1, asteriskIndex+1], upperRowNums))
       touchingPartNums.push(...getAllTouchingNums([asteriskIndex, asteriskIndex-1, asteriskIndex+1], lowerRowNums))
