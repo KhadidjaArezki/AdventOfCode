@@ -1,8 +1,5 @@
 fs = require("fs")
 
-const STARTING_SPEED = 0
-const VELOCITY_PER_MILLISECOND = 1
-
 fs.readFile("./input.txt", (e, data) => {
   let lines = data.toString().split(/\n/)
   const racesTimes = lines[0].match(/(\d+)/g).map(n => +n)
