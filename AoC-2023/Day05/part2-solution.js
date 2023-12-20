@@ -23,7 +23,7 @@ fs.readFile("./small_input.txt", (e, data) => {
       for (let i = 0; i < blockRanges.length; i++) {
         const [ dest, src, length ] = blockRanges[i]
         /* Get the bounds of the intersection of the source range
-         * to be mapped with the start of the current range in block.
+         * to be mapped with the source in the current range in block.
          * E.g., intersection of 79-92 with 52 50 48 is 79-92
          */
         const overlapStart = Math.max(start, src)
