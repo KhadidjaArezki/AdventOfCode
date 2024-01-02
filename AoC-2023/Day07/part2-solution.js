@@ -28,10 +28,13 @@ function isFourOfKind(hand) {
 }
 function isFullHouse(hand) {
   const handLabelCount = getHandLabelCount(hand)
-  return handLabelCount.some(count => count == 3) && handLabelCount.some(count => count == 2)
+  return handLabelCount.some(count => count == 3) &&
+    handLabelCount.some(count => count == 2)
 }
 function isThreeOfKind(hand) {
-  return getHandLabelCount(hand).some(count => count == 3)
+  const handLabelCount = getHandLabelCount(hand)
+  return handLabelCount.some(count => count == 3) &&
+    handLabelCount.every(count => count != 2)
 }
 function isTwoPair(hand) {
   const handLabelCount = getHandLabelCount(hand)
@@ -63,20 +66,32 @@ function isStrongerHand(hand1, hand2) {
 function isStrongerCard(card1, card2) {
   return cards.indexOf(card1) < cards.indexOf(card2)
 }
+function getStrongestCard(...cards) {
+  return cards.sort((card1, card2) => {
+    if (isStrongerCard(card1, card2)) return -1
+    else if (isStrongerCard(card2, card1)) return 1
+    else return 0
+  })[0]
+}
+function getStrongestOtherCardIndex(hand) {
+  const otherCards = hand.match(/([^J])/g)
+  const strongestOtherCard = getStrongestCard(...otherCards)
+  return hand.indexOf(strongestOtherCard)
+}
+
 function applyWildCard(hand) {
-  if (hand.indexOf("J") == -1) return hand
+  if (hand.indexOf("J") == -1 || isFiveOfKind(hand)) return hand
   const indexOfJ = hand.indexOf("J")
   const handLabelCount = getHandLabelCount(hand)
 
-  if (isFiveOfKind(hand)) return "AAAAA"
-  else if(isFourOfKind(hand) || isFullHouse(hand)) {
+  if(isFourOfKind(hand) || isFullHouse(hand)) {
     const otherLetterIndex = hand.match(/([^J])/).index
     return hand.replace(/J/g, hand[otherLetterIndex])
   }
   else if (isThreeOfKind(hand)) {
     if (handLabelCount[indexOfJ] == 3) {
-      const otherLetterIndex = hand.match(/([^J])/).index
-      return hand.replace(/J/g, hand[otherLetterIndex])
+      const index = getStrongestOtherCardIndex(hand)
+      return hand.replace(/J/g, hand[index])
     } else {
       const index = handLabelCount.findIndex(n => n == 3)
       return hand.replace("J", hand[index])
@@ -84,30 +99,36 @@ function applyWildCard(hand) {
   }
   else if (isTwoPair(hand)) {
     if (handLabelCount[indexOfJ] == 2) {
-      const index = handLabelCount.findIndex((n, i) => n == 2 && hand[i] != "J")
+      const otherCards = handLabelCount
+      .filter((n, i) => n == 2 && hand[i] != "J")
+      .map(i => hand[i])
+      const index = getStrongestCard(...otherCards)
       return hand.replace(/J/g, hand[index])
     }
     else {
-      const index = handLabelCount.findIndex(n => n == 2)
+      const index = getStrongestOtherCardIndex(hand)
       return hand.replace("J", hand[index])
     }
   }
   else if (isOnePair(hand)) {
     if (handLabelCount[indexOfJ] == 2) {
-      const index = hand.match(/([^J])/).index
+      const index = getStrongestOtherCardIndex(hand)
       return hand.replace(/J/g, hand[index])
     } else {
       const index = handLabelCount.findIndex(n => n == 2)
       return hand.replace("J", hand[index])
     }
   }
-  else return hand.replace("J", "A")
+  else { // Card is a highCard
+    const index = getStrongestOtherCardIndex(hand)
+    return hand.replace("J", hand[index])
+  }  
 }
-
 fs.readFile("./input.txt", (e, data) => {
   let hands = data.toString()
   .split(/\n/)
   .map(line => line.split(/\s/))
+
   hands.sort(([ hand1, _ ], [ hand2, __ ]) => {
     let hand1Wild = applyWildCard(hand1)
     let hand2Wild = applyWildCard(hand2)
@@ -135,5 +156,6 @@ fs.readFile("./input.txt", (e, data) => {
     const rank = i + 1
     return winnigs + (bid * rank)
   }, 0)
-  console.log(totalWinnigs)
+  // console.log(hands)
+  // console.log(totalWinnigs)
 })
