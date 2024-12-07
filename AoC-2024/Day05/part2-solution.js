@@ -45,14 +45,17 @@ fs.readFile("./input.txt", (e, data) => {
         ordUou[ordUou.length - nextCount - 1] = uou[i]
       } else nonRuled.push(uou[i])
     }
-    let empty = null
+    let indexOfEmpty = null
     for (let j = 0; j < ordUou.length; j++) {
-      if (ordUou[j] == undefined) { empty = j; break;}
+      if (ordUou[j] == undefined) { indexOfEmpty = j; break;}
     }
-    
-    if (empty != null) nonRuled.forEach(p => ordUou[empty] = p)
+    if (indexOfEmpty != null) {
+      nonRuled.forEach(p => {
+        ordUou[indexOfEmpty] = p
+        indexOfEmpty++
+      })
+    }
     orderedUous.push(ordUou)
   })
   console.log(orderedUous.reduce((acc, ou) => acc + parseInt(ou[parseInt(ou.length/2)]), 0))
-  
 })
