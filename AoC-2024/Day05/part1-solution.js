@@ -4,7 +4,6 @@ fs.readFile("./input.txt", (e, data) => {
   const [rules, updates] = data.toString().split(/\n\n/).map(b => b.split(/\n/))
   let ruleMap = {}
   let orderedUpdates = []
-  let midSum = 0
   
   rules.forEach(rule => {
     const [p1, p2] = rule.split("|")
