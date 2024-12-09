@@ -112,7 +112,7 @@ Fortunately, they are pretty sure that adding a single new obstruction won't cau
 
 To have the lowest chance of creating a time paradox, The Historians would like to know all of the possible positions for such an obstruction. The new obstruction can't be placed at the guard's starting position - the guard is there right now and would notice.
 
-In the above example, there are only 6 different positions where a new obstruction would cause the guard to get stuck in a loop. The diagrams of these six situations use O to mark the new obstruction, | to show a position where the guard moves up/down, - to show a position where the guard moves left/right, and + to show a position where the guard moves both up/down and left/right.
+In the above example, there are only `6` different positions where a new obstruction would cause the guard to get stuck in a loop. The diagrams of these six situations use `O` to mark the new obstruction, `|` to show a position where the guard moves up/down, `-` to show a position where the guard moves left/right, and `+` to show a position where the guard moves both up/down and left/right.
 
 Option one, put a printing press next to the guard's starting position:
 ```
@@ -198,6 +198,6 @@ Option six, put a tank of sovereign glue right next to the tank of universal sol
 ......#O..
 ```
 
-It doesn't really matter what you choose to use as an obstacle so long as you and The Historians can put it into position without the guard noticing. The important thing is having enough options that you can find one that minimizes time paradoxes, and in this example, there are 6 different positions you could choose.
+It doesn't really matter what you choose to use as an obstacle so long as you and The Historians can put it into position without the guard noticing. The important thing is having enough options that you can find one that minimizes time paradoxes, and in this example, there are `6` different positions you could choose.
 
 You need to get the guard stuck in a loop by adding a single new obstruction. How many different positions could you choose for this obstruction?
