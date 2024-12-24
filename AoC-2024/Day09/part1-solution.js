@@ -5,38 +5,6 @@ const sum = (arr) => arr.reduce((acc, n) => acc+n, 0)
 fs.readFile("./input.txt", (e, data) => {
   string = data.toString()
   
-  /*let blocks = ""
-  let id = 0
-  for (let i = 0; i < string.length; i++) {
-    if (i % 2 == 0) {
-      for (let j = 0; j < string[i]; j++) {
-        blocks += `${id}`
-      }
-      id++
-    }
-    else {
-      for (let j = 0; j < string[i]; j++) {
-        blocks += "."
-      }
-    }
-  }
-  
-  let lastIndexOfBlock = blocks.length-1
-  for (let k = 0; k < blocks.length; k++) {
-    if (lastIndexOfBlock == k) break
-    if (blocks[k] == ".") {
-      lastIndexOfBlock = getLastIndexOfBlock(blocks, lastIndexOfBlock)
-      blocks = blocks.substring(0, k) + blocks[lastIndexOfBlock] + 
-      blocks.substring(k+1, lastIndexOfBlock) + "." + blocks.substring(lastIndexOfBlock+1)
-    }
-  }
-  
-  checkSum = 0
-  for (let i = 0; i < blocks.length; i++) {
-    if (blocks[i] == ".") break
-    checkSum += i*parseInt(blocks[i])
-  }
-  */
   let id_counts = []
   let freeSpaceCounts = []
   for (let i = 0; i < string.length; i++) {
