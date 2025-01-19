@@ -2,7 +2,7 @@ fs = require("fs")
 
 const sum = (arr) => arr.reduce((acc, n) => acc+n, 0)
 
-fs.readFile("./sinput.txt", (e, data) => {
+fs.readFile("./input.txt", (e, data) => {
   string = data.toString()
   
   let id_counts = []
