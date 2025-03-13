@@ -93,13 +93,13 @@ fs.readFile("./input.txt", (e, data) => {
   }
 	// Create adjacency lists for each graph
   for (const g in graphs) {
-    nodes = graphs[g]
+    const nodes = graphs[g]
     for (const node in nodes) {
       const [y, x] = node.split(",").map(v => parseInt(v))
-      if ((x-1 >= 0) && (`${y},${x-1}` in graphs[g]))               graphs[g][node].push(`${y},${x-1}`)
-      if ((x+1 < lines[0].length) && (`${y},${x+1}` in graphs[g]))  graphs[g][node].push(`${y},${x+1}`)
-      if ((y-1 >= 0) && (`${y-1},${x}` in graphs[g]))               graphs[g][node].push(`${y-1},${x}`)
-      if ((y+1 < lines.length) && (`${y+1},${x}` in graphs[g]))     graphs[g][node].push(`${y+1},${x}`)
+      if ((x-1 >= 0) && (`${y},${x-1}` in nodes))               graphs[g][node].push(`${y},${x-1}`)
+      if ((x+1 < lines[0].length) && (`${y},${x+1}` in nodes))  graphs[g][node].push(`${y},${x+1}`)
+      if ((y-1 >= 0) && (`${y-1},${x}` in nodes))               graphs[g][node].push(`${y-1},${x}`)
+      if ((y+1 < lines.length) && (`${y+1},${x}` in nodes))     graphs[g][node].push(`${y+1},${x}`)
     }
   }
 	let fencePrices = 0
@@ -112,6 +112,10 @@ fs.readFile("./input.txt", (e, data) => {
 			const nodes = cc[c]
 			for (const node of nodes) {
 			  const [y, x] = node.split(",").map(v => parseInt(v))
+			  /* Counting sides boils down to counting the total number of corners
+			   *  A cell can contribute from 0 to 4 corners.
+			   *  There are only 2 types of corners: outer and inner - each having 4 variations
+			   */
 				if (isUpperLeftOuterCornerNode(x, y, nodes))                          regionPerim += 1
 				if (isUpperRightOuterCornerNode(x, y, nodes, LINE_LENGTH))            regionPerim += 1
 				if (isLowerLeftOuterCornerNode(x, y, nodes, NUM_LINES))               regionPerim += 1
@@ -126,4 +130,3 @@ fs.readFile("./input.txt", (e, data) => {
 	}
 	console.log(fencePrices)
 })
-
