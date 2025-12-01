@@ -1,0 +1,25 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "These are my Javascript solutions for the [AdventOfCode](https://adventofcode.com/) challenges. - I will add solutions to as many challenges as possible, including challenges from previous years.",
+  "homepage": "https://github.com/KhadidjaArezki/AdventOfCode#readme",
+  "bugs": {
+    "url": "https://github.com/KhadidjaArezki/AdventOfCode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhadidjaArezki/AdventOfCode.git"
+  },
+  "license": "ISC",
+  "author": "Khadidja Arezki",
+  "type": "commonjs",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run:part": "sh -c 'cd AoC-20$1/Day$2 && npx tsx src/part$3-solution.ts' --"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.21.0"
+  }
+}
