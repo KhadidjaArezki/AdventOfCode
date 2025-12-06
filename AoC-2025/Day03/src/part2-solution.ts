@@ -6,8 +6,6 @@ import * as fs from "fs"
  * Now, you need to make the largest joltage by turning on exactly
  * twelve batteries within each bank.
  * Find the largest possible joltage each bank can produce.
- * Search from the position after the last found max and leave out the last
- * positions that are to be filled in the next iterations
  * */
 
 function sum(...arr: number[]) {
@@ -26,6 +24,11 @@ fs.readFile("./input.txt", (e, data) => {
     for (let i = 0; i < NUM_BATTERIES; i++) {
       let currMaxPos = 0
       let currMaxRating = 0
+      /* Search the segment of the bank that starts from the position after the
+       * max digit found in the segment searched in the last iteration and
+       * leave out the last positions correspoding to the
+       * number of slots that are to be filled in the next iterations.
+       */
       // console.log(bank.slice(lastMaxPos, bank.length - NUM_BATTERIES + i + 1))
       for (let j = lastMaxPos; j < bank.length - NUM_BATTERIES + i + 1; j++) {
         if (parseInt(bank[j]) > currMaxRating) {
